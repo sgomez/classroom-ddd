@@ -5,11 +5,31 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "aulasoftwarelibre/ddd-base": "dev-master",
+        "prooph/standard-projections": "^1.1",
         "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
+        "symfony/dotenv": "*",
         "symfony/flex": "^1.1",
-        "symfony/framework-bundle": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/framework-bundle": "*",
+        "symfony/monolog-bundle": "^3.3",
+        "symfony/orm-pack": "^1.0",
+        "symfony/test-pack": "^1.0",
+        "symfony/twig-bundle": "*",
+        "symfony/yaml": "*"
+    },
+    "require-dev": {
+        "aulasoftwarelibre/ddd-dev": "^0.1",
+        "aulasoftwarelibre/ddd-test": "^1.0",
+        "friends-of-behat/symfony-extension": "^2.0",
+        "friends-of-behat/variadic-extension": "^1.1",
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "phpspec/phpspec": "^5.1",
+        "phpstan/phpstan-doctrine": "^0.10.0",
+        "phpstan/phpstan-symfony": "^0.10.2",
+        "prolic/fpp": "dev-master",
+        "symfony/debug-pack": "^1.0",
+        "symfony/maker-bundle": "^1.10",
+        "symfony/profiler-pack": "^1.0"
     },
     "config": {
         "preferred-install": {
@@ -45,6 +65,19 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "generate": [
+            "vendor/bin/fpp model/",
+            "vendor/bin/php-cs-fixer fix"
+        ],
+        "cs-fix": [
+            "vendor/bin/php-cs-fixer fix"
+        ],
+        "test": [
+            "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run",
+            "vendor/bin/phpspec run --format=pretty --ansi --no-code-generation",
+            "vendor/bin/behat --strict --colors --no-snippets",
+            "vendor/bin/phpstan analyse src --level max"
         ]
     },
     "conflict": {

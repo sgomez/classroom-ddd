@@ -1,0 +1,14 @@
+version: '3'
+services:
+    database:
+        image: 'postgres:10'
+        ports:
+          - 32769:5432
+        volumes:
+            - './vendor/prooph/pdo-event-store/scripts/postgres:/docker-entrypoint-initdb.d'
+            - './var/run/postgresql:/run/postgresql'
+        env_file:
+            - '.env' # change to your local .env file
+        environment:
+            - 'POSTGRES_USER'
+            - 'POSTGRES_PASSWORD'
