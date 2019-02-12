@@ -35,15 +35,14 @@ namespace App\Domain\Group\Event {
 }
 
 namespace App\Domain\Group\Exception {
-    data UserDoesNotBelongToGroupException = UserDoesNotBelongToGroupException deriving(Exception) with
-        | with UserId { string $userId } => 'UserId `{{ $userId }}` does not belong to group.'
-}
-
-namespace App\Application\Group\Exception {
     data GroupIdAlreadyRegisteredException = GroupIdAlreadyRegisteredException deriving(Exception) with
         | withGroupId { string $groupId } => 'GroupId `{{ $groupId }}` already taken.';
+    data GroupIdDoesNotExistsException = GroupIdDoesNotExistsException deriving(Exception) with
+        | withGroupId { string $groupId } => 'GroupId `{{ $groupId }}` does not exists.';
     data GroupNameAlreadyRegisteredException = GroupNameAlreadyRegisteredException deriving(Exception) with
         | withName { string $name } => 'Group name `{{ $name }}` already taken.';
+    data UserDoesNotBelongToGroupException = UserDoesNotBelongToGroupException deriving(Exception) with
+        | withUserId { string $userId } => 'UserId `{{ $userId }}` does not belong to group.';
 }
 
 namespace App\Application\Group\Command {

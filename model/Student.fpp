@@ -17,9 +17,11 @@ namespace App\Domain\Student\Event {
     } deriving (AggregateChanged);
 }
 
-namespace App\Application\Student\Exception {
+namespace App\Domain\Student\Exception {
     data StudentIdAlreadyRegisteredException = StudentIdAlreadyRegisteredException deriving(Exception) with
         | withStudentId { string $studentId } => 'StudentId `{{ $studentId }}` already taken.';
+    data StudentIdDoesNotExistsException = StudentIdDoesNotExistsException deriving(Exception) with
+        | withStudentId { string $studentId } => 'StudentId `{{ $studentId }}` does not exists.';
     data StudentCardNumberAlreadyRegisteredException = StudentCardNumberAlreadyRegisteredException deriving(Exception) with
         | withStudentCardNumber { string $studentCardNumber } => 'StudentCardNumber `{{ $studentCardNumber }}` already taken.';
 }

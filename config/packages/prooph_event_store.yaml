@@ -1,0 +1,28 @@
+prooph_event_store:
+    stores:
+        default:
+            event_store: 'Prooph\EventStore\EventStore'
+            repositories:
+                App\Infrastructure\EventStore\ProfessorsEventStore:
+                    aggregate_type: 'App\Domain\Professor\Model\Professor'
+                    aggregate_translator: 'prooph_event_sourcing.aggregate_translator'
+    projection_managers:
+        classroom_projection_manager:
+            event_store: 'Prooph\EventStore\EventStore'
+            connection: 'doctrine.pdo.connection'
+            projections:
+                professor_projection:
+                    read_model: App\Infrastructure\ReadModel\Projection\ProfessorReadModel
+                    projection: App\Infrastructure\ReadModel\Projection\ProfessorProjection
+
+services:
+    _defaults:
+        public: true
+
+    # Repositories
+
+    ## Write model
+    App\Domain\Professor\Repository\Professors: '@App\Infrastructure\EventStore\ProfessorsEventStore'
+
+    ## Read model
+    App\Infrastructure\ReadModel\Repository\ProfessorViews: '@App\Infrastructure\Repository\ProfessorViewsRepository'

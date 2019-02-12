@@ -12,9 +12,11 @@ namespace App\Domain\Professor\Event {
     } deriving (AggregateChanged);
 }
 
-namespace App\Application\Professor\Exception {
+namespace App\Domain\Professor\Exception {
     data ProfessorIdAlreadyRegisteredException = ProfessorIdAlreadyRegisteredException deriving(Exception) with
         | withProfessorId { string $professorId } => 'ProfessorId `{{ $professorId }}` already taken.';
+    data ProfessorIdDoesNotExistsException = ProfessorIdDoesNotExistsException deriving(Exception) with
+        | withProfessorId { string $professorId } => 'ProfessorId `{{ $professorId }}` does not exists.';
     data ProfessorUsernameAlreadyRegisteredException = ProfessorUsernameAlreadyRegisteredException deriving(Exception) with
         | withUsername { string $username } => 'Professor username `{{ $username }}` already taken.';
 }
