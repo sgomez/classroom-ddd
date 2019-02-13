@@ -88,7 +88,6 @@ class ProfessorAuthenticator extends AbstractFormLoginAuthenticator
 
 //        $user = $this->entityManager->getRepository(ProfessorView::class)->findOneBy(['username' => $credentials['username']]);
 
-
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');

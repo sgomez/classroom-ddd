@@ -11,15 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\Infrastructure\Services\Domain;
+namespace App\Application\Professor\Query;
 
-use App\Domain\Common\Model\Username;
-use App\Domain\Professor\Model\ProfessorId;
-use App\Domain\Professor\Service\ChecksUniqueProfessor;
 use App\Infrastructure\Entity\ProfessorView;
 use App\Infrastructure\ReadModel\Repository\ProfessorViews;
+use AulaSoftwareLibre\DDD\BaseBundle\MessageBus\QueryHandlerInterface;
 
-class ChecksUniqueProfessorFromReadModel implements ChecksUniqueProfessor
+final class GetProfessorByIdHandler implements QueryHandlerInterface
 {
     /**
      * @var ProfessorViews
@@ -31,14 +29,10 @@ class ChecksUniqueProfessorFromReadModel implements ChecksUniqueProfessor
         $this->professorViews = $professorViews;
     }
 
-    public function ofUsername(Username $username): ?ProfessorId
+    public function __invoke(GetProfessorById $query): ?ProfessorView
     {
-        $professor = $this->professorViews->ofUsername($username->toString());
+        $id = $query->professorId()->toString();
 
-        if ($professor instanceof ProfessorView) {
-            return ProfessorId::fromString($professor->getId());
-        }
-
-        return null;
+        return $this->professorViews->ofId($id);
     }
 }

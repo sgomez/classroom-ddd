@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\ReadModel\Projection;
 
 use App\Domain\Professor\Event\ProfessorWasAdded;
+use App\Domain\Professor\Model\ProfessorRole;
 use App\Infrastructure\Entity\ProfessorView;
 use App\Infrastructure\ReadModel\Repository\ProfessorViews;
 use AulaSoftwareLibre\DDD\BaseBundle\Domain\ApplyMethodDispatcherTrait;
@@ -50,11 +51,13 @@ class ProfessorReadModel extends AbstractDoctrineReadModel implements EventHandl
 
     public function applyProfessorWasAdded(ProfessorWasAdded $event): void
     {
+        $role = $event->role()->equals(ProfessorRole::professorCoordinator()) ? 'ROLE_PROFESSOR' : 'ROLE_ASSISTANT';
+
         $professorView = ProfessorView::add(
             $event->aggregateId(),
             $event->username()->toString(),
             'DISABLED',
-            $event->role()->toString()
+            $role
         );
 
         $plainPassword = $event->password()->toString();

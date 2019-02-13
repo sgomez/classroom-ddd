@@ -24,4 +24,9 @@ interface ProfessorViews
     public function ofId(string $professorId): ?ProfessorView;
 
     public function ofUsername(string $username): ?ProfessorView;
+
+    /**
+     * @return array|ProfessorView[]
+     */
+    public function all(): array;
 }

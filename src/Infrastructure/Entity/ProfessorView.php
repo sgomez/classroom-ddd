@@ -56,7 +56,7 @@ class ProfessorView implements UserInterface
         return $professorView;
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

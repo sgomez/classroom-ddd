@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace App\Application\Professor\Query;
 
+use App\Infrastructure\Entity\ProfessorView;
 use App\Infrastructure\ReadModel\Repository\ProfessorViews;
 use AulaSoftwareLibre\DDD\BaseBundle\MessageBus\QueryHandlerInterface;
 
-class GetProfessorByUsernameHandler implements QueryHandlerInterface
+final class GetProfessorByUsernameHandler implements QueryHandlerInterface
 {
     /**
      * @var ProfessorViews
@@ -28,7 +29,7 @@ class GetProfessorByUsernameHandler implements QueryHandlerInterface
         $this->professorViews = $professorViews;
     }
 
-    public function __invoke(GetProfessorByUsername $query)
+    public function __invoke(GetProfessorByUsername $query): ?ProfessorView
     {
         $username = $query->username()->toString();
 

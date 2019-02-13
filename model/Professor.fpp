@@ -31,7 +31,14 @@ namespace App\Application\Professor\Command {
 }
 
 namespace App\Application\Professor\Query {
+    data GetProfessorById = GetProfessorById {
+        \App\Domain\Professor\Model\ProfessorId $professorId,
+    } deriving (Query);
+
     data GetProfessorByUsername = GetProfessorByUsername {
         \App\Domain\Common\Model\Username $username,
+    } deriving (Query);
+
+    data GetAllProfessors = GetAllProfessors {
     } deriving (Query);
 }

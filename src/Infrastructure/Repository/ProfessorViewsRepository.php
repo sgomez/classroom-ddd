@@ -58,4 +58,12 @@ final class ProfessorViewsRepository extends ServiceEntityRepository implements 
     {
         return $this->findOneBy(['username' => $username]);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function all(): array
+    {
+        return $this->findAll();
+    }
 }
