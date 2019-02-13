@@ -16,6 +16,9 @@ security:
             security: false
         main:
             anonymous: true
+            guard:
+                authenticators:
+                    - App\Infrastructure\Security\ProfessorAuthenticator
 
             # activate different ways to authenticate
 

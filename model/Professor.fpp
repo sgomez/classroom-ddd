@@ -29,3 +29,9 @@ namespace App\Application\Professor\Command {
         \App\Domain\Professor\Model\ProfessorRole $role,
     } deriving (Command);
 }
+
+namespace App\Application\Professor\Query {
+    data GetProfessorByUsername = GetProfessorByUsername {
+        \App\Domain\Common\Model\Username $username,
+    } deriving (Query);
+}

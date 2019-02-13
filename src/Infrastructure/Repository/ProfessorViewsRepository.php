@@ -35,6 +35,7 @@ final class ProfessorViewsRepository extends ServiceEntityRepository implements 
     public function add(ProfessorView $professorView): void
     {
         $this->_em->persist($professorView);
+        $this->_em->flush();
     }
 
     public function get(string $professorId): ProfessorView

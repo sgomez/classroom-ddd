@@ -20,6 +20,7 @@ use AulaSoftwareLibre\DDD\BaseBundle\Domain\ApplyMethodDispatcherTrait;
 use AulaSoftwareLibre\DDD\BaseBundle\MessageBus\EventHandlerInterface;
 use AulaSoftwareLibre\DDD\BaseBundle\Prooph\EventStore\Projection\AbstractDoctrineReadModel;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfessorReadModel extends AbstractDoctrineReadModel implements EventHandlerInterface
 {
@@ -31,16 +32,35 @@ class ProfessorReadModel extends AbstractDoctrineReadModel implements EventHandl
      * @var ProfessorViews
      */
     private $professorViews;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $userPasswordEncoder;
 
-    public function __construct(ManagerRegistry $registry, ProfessorViews $professorViews)
+    public function __construct(
+        ManagerRegistry $registry,
+        ProfessorViews $professorViews,
+        UserPasswordEncoderInterface $userPasswordEncoder)
     {
         parent::__construct($registry, ProfessorView::class);
 
         $this->professorViews = $professorViews;
+        $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
     public function applyProfessorWasAdded(ProfessorWasAdded $event): void
     {
-        $professorView = new ProfessorView();
+        $professorView = ProfessorView::add(
+            $event->aggregateId(),
+            $event->username()->toString(),
+            'DISABLED',
+            $event->role()->toString()
+        );
+
+        $plainPassword = $event->password()->toString();
+        $password = $this->userPasswordEncoder->encodePassword($professorView, $plainPassword);
+        $professorView->setPassword($password);
+
+        $this->professorViews->add($professorView);
     }
 }
