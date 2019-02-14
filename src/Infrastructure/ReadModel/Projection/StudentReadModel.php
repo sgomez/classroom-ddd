@@ -21,7 +21,6 @@ use AulaSoftwareLibre\DDD\BaseBundle\Domain\ApplyMethodDispatcherTrait;
 use AulaSoftwareLibre\DDD\BaseBundle\MessageBus\EventHandlerInterface;
 use AulaSoftwareLibre\DDD\BaseBundle\Prooph\EventStore\Projection\AbstractDoctrineReadModel;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class StudentReadModel extends AbstractDoctrineReadModel implements EventHandlerInterface
 {
@@ -36,8 +35,8 @@ class StudentReadModel extends AbstractDoctrineReadModel implements EventHandler
 
     public function __construct(
         ManagerRegistry $registry,
-        StudentViews $studentViews)
-    {
+        StudentViews $studentViews
+    ) {
         parent::__construct($registry, StudentView::class);
 
         $this->studentViews = $studentViews;

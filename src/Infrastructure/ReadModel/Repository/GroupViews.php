@@ -13,19 +13,19 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ReadModel\Repository;
 
-use App\Domain\Student\Model\StudentId;
-use App\Infrastructure\Entity\StudentView;
+use App\Domain\Group\Model\GroupId;
+use App\Infrastructure\Entity\GroupView;
 
-interface StudentViews
+interface GroupViews
 {
-    public function add(StudentView $studentView): void;
+    public function add(GroupView $groupView): void;
 
-    public function get(string $studentId): StudentView;
+    public function get(string $groupId): GroupView;
 
-    public function ofId(string $studentId): ?StudentId;
+    public function ofId(string $groupId): ?GroupId;
 
     /**
-     * @return array|StudentView[]
+     * @return array|GroupView[]
      */
     public function all(): array;
 }

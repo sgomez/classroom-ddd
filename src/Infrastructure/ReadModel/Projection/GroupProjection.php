@@ -11,12 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\Domain\Student\Service;
+namespace App\Infrastructure\ReadModel\Projection;
 
-use App\Domain\Student\Model\StudentCardNumber;
-use App\Domain\Student\Model\StudentId;
+use AulaSoftwareLibre\DDD\BaseBundle\Prooph\EventStore\Projection\AbstractDoctrineReadModelProjection;
 
-interface ChecksUniqueStudent
+class GroupProjection extends AbstractDoctrineReadModelProjection
 {
-    public function ofCardNumber(StudentCardNumber $cardNumber): ?StudentId;
 }

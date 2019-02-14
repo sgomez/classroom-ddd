@@ -1,13 +1,15 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * This file is part of the classroom-ddd.
+ * This file is part of the `classroom-ddd` project.
  *
- * (c) Sergio Gómez <sergio@uco.es>
+ * (c) Aula de Software Libre de la UCO <aulasoftwarelibre@uco.es>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 
 namespace App\Domain\Student\Model;
 
@@ -48,8 +50,7 @@ final class Student extends AggregateRoot implements StudentInterface
         StudentCardNumber $cardNumber,
         Person $person,
         PersonalData $personalData
-    ): self
-    {
+    ): self {
         $student = new self();
 
         $student->recordThat(StudentWasAdded::with(
@@ -122,5 +123,10 @@ final class Student extends AggregateRoot implements StudentInterface
         $this->cardNumber = $event->cardNumber();
         $this->person = $event->person();
         $this->personalData = $event->personalData();
+    }
+
+    protected function applyStudentWasRemoved(StudentWasRemoved $event): void
+    {
+        throw new \RuntimeException('Not implemented yet.');
     }
 }
