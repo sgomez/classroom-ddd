@@ -15,17 +15,4 @@ namespace App\Domain\Common\Model {
         LastName $lastName,
         Age $age
     } deriving (FromArray, ToArray);
-
-    data PhoneNumber = String deriving (FromString, ToString, Equals) where
-        | empty($value) => "Phone number can not be empty.";
-    data Address = String deriving (FromString, ToString, Equals) where
-        | empty($value) => "Address can not be empty.";
-    data Email = String deriving (FromString, ToString, Equals) where
-        | empty($value) => "Email can not be empty.";
-
-    data PersonalData = PersonalData {
-        Email $email,
-        Address $address,
-        PhoneNumber $phoneNumber
-    } deriving (FromArray, ToArray);
 }

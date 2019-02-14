@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Student\Model;
 
-
 use App\Domain\Common\Model\Person;
-use App\Domain\Common\Model\PersonalData;
 use App\Domain\Student\Event\StudentWasAdded;
 use App\Domain\Student\Event\StudentWasRemoved;
 use AulaSoftwareLibre\DDD\BaseBundle\Domain\ApplyMethodDispatcherTrait;
@@ -40,24 +38,17 @@ final class Student extends AggregateRoot implements StudentInterface
      */
     private $person;
 
-    /**
-     * @var PersonalData
-     */
-    private $personalData;
-
     public static function add(
         StudentId $studentId,
         StudentCardNumber $cardNumber,
-        Person $person,
-        PersonalData $personalData
+        Person $person
     ): self {
         $student = new self();
 
         $student->recordThat(StudentWasAdded::with(
             $studentId,
             $cardNumber,
-            $person,
-            $personalData
+            $person
         ));
 
         return $student;
@@ -94,14 +85,6 @@ final class Student extends AggregateRoot implements StudentInterface
         return $this->person;
     }
 
-    /**
-     * @return PersonalData
-     */
-    public function personalData(): PersonalData
-    {
-        return $this->personalData;
-    }
-
     protected function aggregateId(): string
     {
         return $this->studentId->toString();
@@ -122,11 +105,9 @@ final class Student extends AggregateRoot implements StudentInterface
         $this->studentId = $event->studentId();
         $this->cardNumber = $event->cardNumber();
         $this->person = $event->person();
-        $this->personalData = $event->personalData();
     }
 
     protected function applyStudentWasRemoved(StudentWasRemoved $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
     }
 }

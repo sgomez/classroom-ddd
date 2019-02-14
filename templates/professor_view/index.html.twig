@@ -8,10 +8,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Username</th>
                 <th>Roles</th>
-                <th>Password</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,7 +19,7 @@
                 <td>{{ professor_view.username }}</td>
                 <td>{{ professor_view.roles ? professor_view.roles|json_encode : '' }}</td>
                 <td>
-                    <a href="{{ path('professor_view_show', {'id': professor_view.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('professor_view_show', {'id': professor_view.id}) }}">show</a>
                 </td>
             </tr>
         {% else %}
@@ -32,5 +30,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('professor_view_new') }}">Create new</a>
+    <a class="btn btn-success" href="{{ path('professor_view_new') }}">Create new</a>
 {% endblock %}

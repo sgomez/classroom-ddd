@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Student\Exception\StudentIdDoesNotExistsException;
-use App\Domain\Student\Model\StudentId;
 use App\Infrastructure\Entity\StudentView;
 use App\Infrastructure\ReadModel\Repository\StudentViews;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -50,9 +49,14 @@ class StudentViewsRepository extends ServiceEntityRepository implements StudentV
         return $studentView;
     }
 
-    public function ofId(string $studentId): ?StudentId
+    public function ofId(string $studentId): ?StudentView
     {
         return $this->find($studentId);
+    }
+
+    public function ofCardNumber(string $cardNumber): ?StudentView
+    {
+        return $this->findOneBy(['cardNumber' => $cardNumber]);
     }
 
     /**
@@ -61,5 +65,13 @@ class StudentViewsRepository extends ServiceEntityRepository implements StudentV
     public function all(): array
     {
         return $this->findAll();
+    }
+
+    public function remove(string $studentId): void
+    {
+        $studentView = $this->get($studentId);
+
+        $this->_em->remove($studentView);
+        $this->_em->flush();
     }
 }

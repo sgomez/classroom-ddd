@@ -27,7 +27,6 @@ final class StudentWasAdded extends \Prooph\EventSourcing\AggregateChanged
     private $studentId;
     private $cardNumber;
     private $person;
-    private $personalData;
 
     public function studentId(): \App\Domain\Student\Model\StudentId
     {
@@ -56,21 +55,11 @@ final class StudentWasAdded extends \Prooph\EventSourcing\AggregateChanged
         return $this->person;
     }
 
-    public function personalData(): \App\Domain\Common\Model\PersonalData
-    {
-        if (null === $this->personalData) {
-            $this->personalData = \App\Domain\Common\Model\PersonalData::fromArray($this->payload['personalData']);
-        }
-
-        return $this->personalData;
-    }
-
-    public static function with(\App\Domain\Student\Model\StudentId $studentId, \App\Domain\Student\Model\StudentCardNumber $cardNumber, \App\Domain\Common\Model\Person $person, \App\Domain\Common\Model\PersonalData $personalData): StudentWasAdded
+    public static function with(\App\Domain\Student\Model\StudentId $studentId, \App\Domain\Student\Model\StudentCardNumber $cardNumber, \App\Domain\Common\Model\Person $person): StudentWasAdded
     {
         return new self($studentId->toString(), [
             'cardNumber' => $cardNumber->toString(),
             'person' => $person->toArray(),
-            'personalData' => $personalData->toArray(),
         ]);
     }
 
@@ -82,10 +71,6 @@ final class StudentWasAdded extends \Prooph\EventSourcing\AggregateChanged
 
         if (!isset($payload['person']) || !\is_array($payload['person'])) {
             throw new \InvalidArgumentException("Key 'person' is missing in payload or is not an array");
-        }
-
-        if (!isset($payload['personalData']) || !\is_array($payload['personalData'])) {
-            throw new \InvalidArgumentException("Key 'personalData' is missing in payload or is not an array");
         }
 
         $this->payload = $payload;

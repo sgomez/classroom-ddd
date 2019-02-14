@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ReadModel\Repository;
 
-use App\Domain\Student\Model\StudentId;
 use App\Infrastructure\Entity\StudentView;
 
 interface StudentViews
@@ -22,7 +21,11 @@ interface StudentViews
 
     public function get(string $studentId): StudentView;
 
-    public function ofId(string $studentId): ?StudentId;
+    public function ofId(string $studentId): ?StudentView;
+
+    public function ofCardNumber(string $cardNumber): ?StudentView;
+
+    public function remove(string $studentId): void;
 
     /**
      * @return array|StudentView[]

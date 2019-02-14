@@ -44,11 +44,19 @@ class StudentReadModel extends AbstractDoctrineReadModel implements EventHandler
 
     public function applyStudentWasAdded(StudentWasAdded $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $studentView = StudentView::add(
+            $event->studentId()->toString(),
+            $event->cardNumber()->toString(),
+            $event->person()->firstName()->toString(),
+            $event->person()->lastName()->toString(),
+            $event->person()->age()->toScalar()
+        );
+
+        $this->studentViews->add($studentView);
     }
 
     public function applyStudentWasRemoved(StudentWasRemoved $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $this->studentViews->remove($event->studentId()->toString());
     }
 }

@@ -9,7 +9,6 @@ namespace App\Domain\Student\Event {
         \App\Domain\Student\Model\StudentId $studentId,
         \App\Domain\Student\Model\StudentCardNumber $cardNumber,
         \App\Domain\Common\Model\Person $person,
-        \App\Domain\Common\Model\PersonalData $personalData
     } deriving (AggregateChanged);
 
     data StudentWasRemoved = StudentWasRemoved {
@@ -31,10 +30,18 @@ namespace App\Application\Student\Command {
         \App\Domain\Student\Model\StudentId $studentId,
         \App\Domain\Student\Model\StudentCardNumber $cardNumber,
         \App\Domain\Common\Model\Person $person,
-        \App\Domain\Common\Model\PersonalData $personalData
     } deriving (Command);
 
     data RemoveStudent = RemoveStudent {
         \App\Domain\Student\Model\StudentId $studentId,
     } deriving (Command);
+}
+
+namespace App\Application\Student\Query {
+    data GetStudentById = GetStudentById {
+        \App\Domain\Student\Model\StudentId $studentId,
+    } deriving (Query);
+
+    data GetAllStudents = GetAllStudents {
+    } deriving (Query);
 }

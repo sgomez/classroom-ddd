@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace App\Domain\Student\Model;
 
 use App\Domain\Common\Model\Person;
-use App\Domain\Common\Model\PersonalData;
 
 interface StudentInterface
 {
@@ -34,7 +33,7 @@ interface StudentInterface
     public function person(): Person;
 
     /**
-     * @return PersonalData
+     * Remove student.
      */
-    public function personalData(): PersonalData;
+    public function remove(): void;
 }

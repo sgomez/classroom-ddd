@@ -33,3 +33,6 @@ services:
 
     App\Domain\Professor\Service\ChecksUniqueProfessor:
         alias: 'App\Infrastructure\Services\Domain\ChecksUniqueProfessorFromReadModel'
+
+    App\Domain\Student\Service\ChecksUniqueStudent:
+        alias: 'App\Infrastructure\Services\Domain\ChecksUniqueStudentFromReadModel'
