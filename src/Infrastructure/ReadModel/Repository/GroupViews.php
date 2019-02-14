@@ -22,10 +22,12 @@ interface GroupViews
 
     public function get(string $groupId): GroupView;
 
-    public function ofId(string $groupId): ?GroupId;
+    public function ofId(string $groupId): ?GroupView;
 
     /**
      * @return array|GroupView[]
      */
     public function all(): array;
+
+    public function remove(string $groupId): void;
 }

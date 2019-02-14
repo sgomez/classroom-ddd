@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace App\Application\Student\Command;
 
-use App\Domain\Student\Exception\StudentIdDoesNotExistsException;
-use App\Domain\Student\Model\StudentInterface;
 use App\Domain\Student\Repository\Students;
 use AulaSoftwareLibre\DDD\BaseBundle\MessageBus\CommandHandlerInterface;
 
@@ -33,10 +31,6 @@ class RemoveStudentHandler implements CommandHandlerInterface
     public function __invoke(RemoveStudent $command)
     {
         $student = $this->students->get($command->studentId());
-
-        if (!$student instanceof StudentInterface) {
-            throw StudentIdDoesNotExistsException::withStudentId($command->studentId()->toString());
-        }
 
         $student->remove();
 

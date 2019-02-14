@@ -152,12 +152,12 @@ final class Group extends AggregateRoot implements GroupInterface
 
     protected function applyGroupWasAdded(GroupWasAdded $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $this->groupId = $event->groupId();
+        $this->name = $event->groupName();
     }
 
     protected function applyGroupWasRemoved(GroupWasRemoved $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
     }
 
     protected function applyGroupMemberWasAdded(GroupMemberWasAdded $event): void

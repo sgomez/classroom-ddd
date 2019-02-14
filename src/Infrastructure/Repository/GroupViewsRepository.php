@@ -50,7 +50,7 @@ class GroupViewsRepository extends ServiceEntityRepository implements GroupViews
         return $groupView;
     }
 
-    public function ofId(string $groupId): ?GroupId
+    public function ofId(string $groupId): ?GroupView
     {
         return $this->find($groupId);
     }
@@ -61,5 +61,13 @@ class GroupViewsRepository extends ServiceEntityRepository implements GroupViews
     public function all(): array
     {
         return $this->findAll();
+    }
+
+    public function remove(string $groupId): void
+    {
+        $group = $this->get($groupId);
+
+        $this->_em->remove($group);
+        $this->_em->flush();
     }
 }

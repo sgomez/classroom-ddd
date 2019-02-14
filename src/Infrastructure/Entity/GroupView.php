@@ -16,14 +16,14 @@ namespace App\Infrastructure\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\GroupViewRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Repository\GroupViewsRepository")
  */
 class GroupView
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -37,7 +37,17 @@ class GroupView
      */
     private $leader;
 
-    public function getId(): ?int
+    public static function add(string $groupId, string $name): self
+    {
+        $group = new self();
+
+        $group->id = $groupId;
+        $group->name = $name;
+
+        return $group;
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -45,13 +55,6 @@ class GroupView
     public function getName(): ?string
     {
         return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getLeader(): ?string

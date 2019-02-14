@@ -53,8 +53,7 @@ class StudentView
         string $firstName,
         string $lastName,
         int $age
-    ): self
-    {
+    ): self {
         $studentView = new self();
 
         $studentView->id = $studentId;

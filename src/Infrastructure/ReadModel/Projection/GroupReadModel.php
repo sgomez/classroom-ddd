@@ -47,12 +47,17 @@ class GroupReadModel extends AbstractDoctrineReadModel implements EventHandlerIn
 
     public function applyGroupWasAdded(GroupWasAdded $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $group = GroupView::add(
+            $event->groupId()->toString(),
+            $event->groupName()->toString()
+        );
+
+        $this->groupViews->add($group);
     }
 
     public function applyGroupWasRemoved(GroupWasRemoved $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $this->groupViews->remove($event->groupId()->toString());
     }
 
     protected function applyGroupMemberWasAdded(GroupMemberWasAdded $event): void

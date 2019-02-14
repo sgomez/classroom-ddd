@@ -75,3 +75,11 @@ namespace App\Application\Group\Command {
     } deriving (AggregateChanged);
 }
 
+namespace App\Application\Group\Query {
+    data GetGroupById = GetGroupById {
+        \App\Domain\Group\Model\GroupId $groupId,
+    } deriving (Query);
+
+    data GetAllGroups = GetAllGroups {
+    } deriving (Query);
+}
