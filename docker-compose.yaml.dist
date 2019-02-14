@@ -12,3 +12,23 @@ services:
         environment:
             - 'POSTGRES_USER'
             - 'POSTGRES_PASSWORD'
+
+    projection_professor:
+        image: prooph/php:7.2-cli
+        entrypoint:
+          - /app/docker/bin/wait_for_db.sh
+        volumes:
+          - .:/app
+        depends_on:
+          - database
+        command: php bin/console event-store:projection:run professor_projection
+
+    projection_student:
+        image: prooph/php:7.2-cli
+        entrypoint:
+          - /app/docker/bin/wait_for_db.sh
+        volumes:
+          - .:/app
+        depends_on:
+          - database
+        command: php bin/console event-store:projection:run student_projection

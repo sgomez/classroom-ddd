@@ -6,6 +6,9 @@ prooph_event_store:
                 App\Infrastructure\EventStore\ProfessorsEventStore:
                     aggregate_type: 'App\Domain\Professor\Model\Professor'
                     aggregate_translator: 'prooph_event_sourcing.aggregate_translator'
+                App\Infrastructure\EventStore\StudentsEventStore:
+                    aggregate_type: 'App\Domain\Student\Model\Student'
+                    aggregate_translator: 'prooph_event_sourcing.aggregate_translator'
     projection_managers:
         classroom_projection_manager:
             event_store: 'Prooph\EventStore\EventStore'
@@ -14,6 +17,9 @@ prooph_event_store:
                 professor_projection:
                     read_model: App\Infrastructure\ReadModel\Projection\ProfessorReadModel
                     projection: App\Infrastructure\ReadModel\Projection\ProfessorProjection
+                student_projection:
+                    read_model: App\Infrastructure\ReadModel\Projection\StudentReadModel
+                    projection: App\Infrastructure\ReadModel\Projection\StudentProjection
 
 services:
     _defaults:
@@ -23,6 +29,8 @@ services:
 
     ## Write model
     App\Domain\Professor\Repository\Professors: '@App\Infrastructure\EventStore\ProfessorsEventStore'
+    App\Domain\Student\Repository\Students: '@App\Infrastructure\EventStore\StudentsEventStore'
 
     ## Read model
     App\Infrastructure\ReadModel\Repository\ProfessorViews: '@App\Infrastructure\Repository\ProfessorViewsRepository'
+    App\Infrastructure\ReadModel\Repository\StudentViews: '@App\Infrastructure\Repository\StudentViewsRepository'
