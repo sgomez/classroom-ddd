@@ -11,6 +11,7 @@
         </service>
 
         <service id="tests.behat.context.hook.database" class="App\Tests\Behat\Context\Hook\DatabaseContext">
+            <argument type="service" id="App\Tests\Behat\Repository\ProfessorViewsInMemoryRepository"/>
         </service>
     </services>
 </container>

@@ -13,12 +13,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Behat\Context\Hook;
 
+use App\Tests\Behat\Repository\ProfessorViewsInMemoryRepository;
 use Behat\Behat\Context\Context;
 
 class DatabaseContext implements Context
 {
+    /**
+     * @var ProfessorViewsInMemoryRepository
+     */
+    private $professors;
+
     public function __construct(
+        ProfessorViewsInMemoryRepository $professors
     ) {
+        $this->professors = $professors;
     }
 
     /**
@@ -26,5 +34,6 @@ class DatabaseContext implements Context
      */
     public function reset()
     {
+        $this->professors->reset();
     }
 }
