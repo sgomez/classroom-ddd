@@ -16,6 +16,7 @@ namespace App\Infrastructure\ReadModel\Projection;
 use App\Domain\Group\Event\GroupLeaderWasAssigned;
 use App\Domain\Group\Event\GroupLeaderWasDismissed;
 use App\Domain\Group\Event\GroupMemberWasAdded;
+use App\Domain\Group\Event\GroupMemberWasRemoved;
 use App\Domain\Group\Event\GroupWasAdded;
 use App\Domain\Group\Event\GroupWasRemoved;
 use App\Infrastructure\Entity\GroupView;
@@ -38,14 +39,14 @@ class GroupReadModel extends AbstractDoctrineReadModel implements EventHandlerIn
 
     public function __construct(
         ManagerRegistry $registry,
-        GroupViews $groupViews)
-    {
+        GroupViews $groupViews
+    ) {
         parent::__construct($registry, GroupView::class);
 
         $this->groupViews = $groupViews;
     }
 
-    public function applyGroupWasAdded(GroupWasAdded $event): void
+    protected function applyGroupWasAdded(GroupWasAdded $event): void
     {
         $group = GroupView::add(
             $event->groupId()->toString(),
@@ -55,14 +56,27 @@ class GroupReadModel extends AbstractDoctrineReadModel implements EventHandlerIn
         $this->groupViews->add($group);
     }
 
-    public function applyGroupWasRemoved(GroupWasRemoved $event): void
+    protected function applyGroupWasRemoved(GroupWasRemoved $event): void
     {
         $this->groupViews->remove($event->groupId()->toString());
     }
 
-    protected function applyGroupMemberWasAdded(GroupMemberWasAdded $event): void
+    protected function applyGroupMemberWasAdded(GroupMemberWasAdded $event)
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $groupView = $this->groupViews->get($event->groupId()->toString());
+
+        $groupView->increment();
+
+        $this->groupViews->save();
+    }
+
+    protected function applyGroupMemberWasRemoved(GroupMemberWasRemoved $event)
+    {
+        $groupView = $this->groupViews->get($event->groupId()->toString());
+
+        $groupView->decrement();
+
+        $this->groupViews->save();
     }
 
     protected function applyGroupLeaderWasAssigned(GroupLeaderWasAssigned $event): void

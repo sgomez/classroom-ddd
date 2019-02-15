@@ -31,4 +31,6 @@ interface StudentViews
      * @return array|StudentView[]
      */
     public function all(): array;
+
+    public function save(): void;
 }

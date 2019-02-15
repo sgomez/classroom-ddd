@@ -74,4 +74,9 @@ class StudentViewsRepository extends ServiceEntityRepository implements StudentV
         $this->_em->remove($studentView);
         $this->_em->flush();
     }
+
+    public function save(): void
+    {
+        $this->_em->flush();
+    }
 }

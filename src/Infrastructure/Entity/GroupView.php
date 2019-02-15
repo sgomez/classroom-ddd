@@ -33,6 +33,12 @@ class GroupView
     private $name;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    private $count;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $leader;
@@ -43,6 +49,7 @@ class GroupView
 
         $group->id = $groupId;
         $group->name = $name;
+        $group->count = 0;
 
         return $group;
     }
@@ -55,6 +62,24 @@ class GroupView
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return $this->count;
+    }
+
+    public function increment(): void
+    {
+        ++$this->count;
+    }
+
+    public function decrement(): void
+    {
+        --$this->count;
     }
 
     public function getLeader(): ?string

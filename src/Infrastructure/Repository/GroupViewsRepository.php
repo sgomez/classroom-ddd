@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Group\Exception\GroupIdDoesNotExistsException;
-use App\Domain\Group\Model\GroupId;
 use App\Infrastructure\Entity\GroupView;
 use App\Infrastructure\ReadModel\Repository\GroupViews;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -68,6 +67,11 @@ class GroupViewsRepository extends ServiceEntityRepository implements GroupViews
         $group = $this->get($groupId);
 
         $this->_em->remove($group);
+        $this->_em->flush();
+    }
+
+    public function save(): void
+    {
         $this->_em->flush();
     }
 }

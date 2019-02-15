@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ReadModel\Repository;
 
-use App\Domain\Group\Model\GroupId;
 use App\Infrastructure\Entity\GroupView;
 
 interface GroupViews
@@ -30,4 +29,6 @@ interface GroupViews
     public function all(): array;
 
     public function remove(string $groupId): void;
+
+    public function save(): void;
 }

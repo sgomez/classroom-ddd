@@ -40,7 +40,7 @@ final class Group extends AggregateRoot implements GroupInterface
     /**
      * @var array|StudentId[]
      */
-    private $students;
+    private $members;
 
     /**
      * @var StudentId|null
@@ -154,6 +154,7 @@ final class Group extends AggregateRoot implements GroupInterface
     {
         $this->groupId = $event->groupId();
         $this->name = $event->groupName();
+        $this->members = [];
     }
 
     protected function applyGroupWasRemoved(GroupWasRemoved $event): void
@@ -162,7 +163,15 @@ final class Group extends AggregateRoot implements GroupInterface
 
     protected function applyGroupMemberWasAdded(GroupMemberWasAdded $event): void
     {
-        throw new \RuntimeException('Not implemented yet.');
+        $this->members[] = $event->studentId();
+    }
+
+    protected function applyGroupMemberWasRemoved(GroupMemberWasRemoved $event): void
+    {
+        $studentId = $event->studentId();
+        $this->members = array_filter($this->members, function (StudentId $id) use ($studentId) {
+            return false === $id->equals($studentId);
+        });
     }
 
     protected function applyGroupLeaderWasAssigned(GroupLeaderWasAssigned $event): void
